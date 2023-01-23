@@ -1,1 +1,83 @@
-<p>main-page works!</p>
+<!--<div *ngFor="let pokes of pokeArray">
+    {{ pokes.moves }}
+<div *ngFor="let pokeMoves of pokes.moves">{{ pokeMoves.moveName }}</div>
+</div>
+
+<button (click)="log()">XXX</button>
+
+<div *ngFor="let pokes of pokeArray">
+  <img src="{{ pokes.image }}" />
+  {{ pokes.name }}
+  {{ pokes.health }}
+  {{ pokes.attack }}
+  {{ pokes.defense }}
+  <div>
+    <div *ngFor="let types of pokes.types">{{ types.type1 }}</div>
+
+    <div *ngFor="let types of pokes.types">{{ types.type2 }}</div>
+  </div>
+
+  <div *ngFor="let pokeMoves of pokes.moves">{{ pokeMoves.moveName }}</div>
+  
+
+   -------------------------------
+    <img src="{{ pokes.image }}" />
+    {{ pokes.name }}
+    {{ pokes.health }}
+    {{ pokes.attack }}
+    {{ pokes.defense }}
+    <div>
+      <div *ngFor="let types of pokes.types">{{ types.type1 }}</div>
+
+      <div *ngFor="let types of pokes.types">{{ types.type2 }}</div>
+    </div>
+
+    <div *ngFor="let pokeMoves of pokes.moves">
+      {{ pokeMoves.moveName }}
+    </div>
+</div>-->
+
+<div class="row">
+  <mat-grid-list class="grid" [cols]="colsSize()" rowHeight="400px">
+    <mat-grid-tile
+      class="grid-tile"
+      *ngFor="let pokes of pokeArray"
+      [colspan]="1"
+      [rowspan]="1"
+    >
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>{{ pokes.name }}</mat-card-title>
+        </mat-card-header>
+
+        <img src="{{ pokes.image }}" />
+        <div *ngFor="let types of pokes.types">
+          <span>{{ types.type1 }}</span
+          ><span *ngIf="types.type2">/{{ types.type2 }}</span>
+        </div>
+        <mat-card-content>
+          <p>
+            {{ pokes.name }}
+            {{ pokes.health }}
+            {{ pokes.attack }}
+            {{ pokes.defense }}
+          </p>
+          <mat-divider></mat-divider>
+
+          <mat-card-footer>
+            <mat-grid-list cols="2" rowHeight="25px">
+              <mat-grid-tile
+                *ngFor="let pokeMoves of pokes.moves"
+                matTooltip="{{ pokeMoves.moveName }}"
+                [colspan]="1"
+                [rowspan]="1"
+              >
+                {{ pokeMoves.moveName | slice : 0 : 12 }}
+              </mat-grid-tile>
+            </mat-grid-list>
+          </mat-card-footer>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

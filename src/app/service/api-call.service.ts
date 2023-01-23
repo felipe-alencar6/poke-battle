@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, Subject, mergeMap, from, toArray } from 'rxjs';
 import { Pokemon } from '../shared/pokemon';
 
 @Injectable({
@@ -8,16 +8,29 @@ import { Pokemon } from '../shared/pokemon';
 })
 export class ApiCallService {
   constructor(private http: HttpClient) {}
-
+  x: any[] = [];
   url = 'https://pokeapi.co/api/v2/pokemon/';
-  getUsers(): Observable<Object> {
+
+  getAllPokes(): Observable<any[]> {
     return this.http.get(this.url).pipe(
-      map((res: any) => {
-        return res;
-      })
+      mergeMap((res: any) => {
+        return from(res.results).pipe(
+          mergeMap((result: any) => {
+            return this.http.get(result.url);
+          })
+        );
+      }),
+      toArray()
     );
   }
-  teste() {
-    this.getUsers().subscribe((data) => console.log(data));
+
+  getPokeMoves(): Observable<any> {
+    return this.getAllPokes().pipe(
+      map((res: any) => {
+        res.forEach((res: any) => {
+          return;
+        });
+      })
+    );
   }
 }
