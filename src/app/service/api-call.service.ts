@@ -9,7 +9,7 @@ import { Pokemon } from '../shared/pokemon';
 export class ApiCallService {
   constructor(private http: HttpClient) {}
   x: any[] = [];
-  url = 'https://pokeapi.co/api/v2/pokemon/';
+  url = 'https://pokeapi.co/api/v2/pokemon?limit=151&offset=0';
 
   getAllPokes(): Observable<any[]> {
     return this.http.get(this.url).pipe(
